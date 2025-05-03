@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,19 +26,19 @@ public class Transaction {
 
     private Integer totalProducts;
 
+    private BigDecimal totalPrice;
+
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
     @Enumerated(EnumType.STRING)
-    private TransactionStatus Status;
+    private TransactionStatus status;
 
     private String description;
 
-    private LocalDateTime expiryDate;
+    private LocalDateTime updatedAt;
 
-    private LocalDateTime updateAt;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -56,11 +57,11 @@ public class Transaction {
         return "Transaction{" +
                 "id=" + id +
                 ", totalProducts=" + totalProducts +
+                ", totalPrice=" + totalPrice +
                 ", transactionType=" + transactionType +
-                ", Status=" + Status +
+                ", status=" + status +
                 ", description='" + description + '\'' +
-                ", expiryDate=" + expiryDate +
-                ", updateAt=" + updateAt +
+                ", updatedAt=" + updatedAt +
                 ", createdAt=" + createdAt +
                 '}';
     }

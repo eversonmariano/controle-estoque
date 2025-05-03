@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,22 +19,21 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Name is required")
-    @Column(unique = true)
     private String name;
 
     @NotBlank(message = "Sku is required")
     @Column(unique = true)
     private String sku;
 
-    @Positive(message = "Product price must be a positive value.")
+    @Positive(message = "Product price msut be a positive value")
     private BigDecimal price;
-    @Min(value = 0,message = "Stock quantity cannot be lesser than zero.")
+
+    @Min(value = 0, message = "Stock quantity cannot be lesser than zero")
     private Integer stockQuantity;
 
     private String description;
@@ -44,14 +42,13 @@ public class Product {
 
     private LocalDateTime expiryDate;
 
-    private LocalDateTime updateAt;
+    private  LocalDateTime updatedAt;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 
     @Override
     public String toString() {
@@ -64,7 +61,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", expiryDate=" + expiryDate +
-                ", updateAt=" + updateAt +
+                ", updatedAt=" + updatedAt +
                 ", createdAt=" + createdAt +
                 '}';
     }
