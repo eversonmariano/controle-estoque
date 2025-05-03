@@ -1,5 +1,7 @@
 package com.dev.everson.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -12,28 +14,25 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Table(name = "products")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
-    @NotBlank(message = "Name is required")
+    private Long productId;
+    private Long categoryId;
+    private Long supplierId;
+
     private String name;
 
-    @NotBlank(message = "Sku is required")
-    @Column(unique = true)
     private String sku;
 
-    @Positive(message = "Product price msut be a positive value")
     private BigDecimal price;
 
-    @Min(value = 0, message = "Stock quantity cannot be lesser than zero")
     private Integer stockQuantity;
 
     private String description;
@@ -44,25 +43,7 @@ public class ProductDTO {
 
     private  LocalDateTime updatedAt;
 
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private CategoryDTO category;
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", sku='" + sku + '\'' +
-                ", price=" + price +
-                ", stockQuantity=" + stockQuantity +
-                ", description='" + description + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", expiryDate=" + expiryDate +
-                ", updatedAt=" + updatedAt +
-                ", createdAt=" + createdAt +
-                '}';
-    }
 }
